@@ -1,9 +1,54 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "897c5bce-9155-4111-932d-7678a538ec54",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "37ef23c5-8ea2-41f6-8607-729d1c4b667f",
+  "prevId": "897c5bce-9155-4111-932d-7678a538ec54",
   "tables": {
+    "sessions": {
+      "name": "sessions",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "sessions_user_id_users_id_fk": {
+          "name": "sessions_user_id_users_id_fk",
+          "tableFrom": "sessions",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
     "users": {
       "name": "users",
       "columns": {
@@ -41,7 +86,7 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "'\"2026-08-14T06:31:56.887Z\"'"
+          "default": "'\"2026-08-14T06:41:17.948Z\"'"
         },
         "updated_at": {
           "name": "updated_at",
@@ -49,7 +94,7 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "'\"2026-08-14T06:31:56.887Z\"'"
+          "default": "'\"2026-08-14T06:41:17.948Z\"'"
         }
       },
       "indexes": {
