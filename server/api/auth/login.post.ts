@@ -1,15 +1,8 @@
-import { z } from "zod";
 import { eq } from "drizzle-orm";
 import { users } from "~~/server/database/schema";
 import { verifyPassword } from "~~/server/utils/password";
 import { createSession } from "~~/server/utils/sessions";
-
-const loginSchema = z.object({
-  email: z.email(),
-  password: z.string().min(6),
-});
-
-type LoginSchema = z.infer<typeof loginSchema>;
+import { type LoginSchema, loginSchema } from "~~/shared/schemas/auth/login";
 
 export default defineEventHandler(async (event) => {
   const body: LoginSchema = await readBody(event);

@@ -1,15 +1,23 @@
-import { z } from "zod";
 import { users } from "~~/server/database/schema";
 import { eq } from "drizzle-orm";
-
-const registerSchema = z.object({
-  name: z.string().min(3),
-  email: z.email(),
-  password: z.string().min(6),
-});
-type RegisterSchema = z.infer<typeof registerSchema>;
+import {
+  registerSchema,
+  type RegisterSchema,
+} from "@@/shared/schemas/auth/register";
 
 export default defineEventHandler(async (event) => {
+  const sessionId = getCookie(event, "session");
+
+  if (sessionId) {
+    const user = await getUserFromSession(sessionId);
+
+    if (user) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: "Ya tienes una sesión activa",
+      });
+    }
+  }
   const body: RegisterSchema = await readBody(event);
   const result = registerSchema.safeParse(body);
 
